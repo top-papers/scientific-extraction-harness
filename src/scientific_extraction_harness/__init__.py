@@ -43,6 +43,8 @@ from .improvement import (
     CandidateRegistryError,
 )
 from .review import ReviewAction, ReviewError, ReviewEvent, ReviewResult, ReviewStore, apply_review_event
+from .expert_review import ExpertReviewError, ExpertReviewRecord, ExpertValidationRecord, ExpertReviewStore, ValidationEvent, ValidationScore, create_expert_review
+from .yaml_export import YAMLExportError, export_dataset, export_reviewed_dataset
 from .gates import GATE_NAMES, GatePolicy, GateResult, evaluate_gates
 from .scheduler import Schedule, Scheduler, SchedulerError, PromotionReceipt
 from .improvement_loop import (
@@ -142,6 +144,16 @@ __all__ = [
     "ReviewResult",
     "ReviewStore",
     "apply_review_event",
+    "ExpertReviewError",
+    "ExpertReviewRecord",
+    "ExpertValidationRecord",
+    "ExpertReviewStore",
+    "ValidationEvent",
+    "ValidationScore",
+    "create_expert_review",
+    "YAMLExportError",
+    "export_dataset",
+    "export_reviewed_dataset",
     "EVALUATOR_SCHEMA_VERSION",
     "SPLITS",
     "CaseManifest",

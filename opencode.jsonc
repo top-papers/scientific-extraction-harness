@@ -1,0 +1,16 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Project-local OpenCode V2 configuration. Configure OPENCODE_MODEL locally.
+  "agents": {
+    "scientific-extraction-expert": {
+      "description": "Local scientific evidence extraction expert",
+      "mode": "primary",
+      "model": "{env:OPENCODE_MODEL}",
+      "permissions": [
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "shell", "resource": "*", "effect": "deny" },
+        { "action": "webfetch", "resource": "*", "effect": "deny" }
+      ]
+    }
+  }
+}

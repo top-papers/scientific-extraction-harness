@@ -14,6 +14,8 @@ from .evidence import EvidenceRecord
 from .manifest import ManifestLoader
 from .pipeline import run_extract
 from .review import ReviewStore, ReviewEvent
+from .expert_app import create_server
+from .opencode_bootstrap import install_bundled_agent
 
 
 def _json_dump(value: object) -> str:
@@ -127,6 +129,32 @@ def _load_predictions(path: str) -> dict[str, list[EvidenceRecord]]:
     return result
 
 
+def _install_agent(args: argparse.Namespace) -> int:
+    destination = install_bundled_agent(args.project_root, force=args.force)
+    print(f"Installed bundled OpenCode agent: {destination}")
+    print("OpenCode reads project config from opencode.jsonc. Set OPENCODE_MODEL locally to a configured provider/model.")
+    return 0
+
+
+def _serve_expert(args: argparse.Namespace) -> int:
+    # Install only the reviewed package resource; never fetch or execute remote content.
+    if not args.no_install:
+        destination = install_bundled_agent(args.project_root, force=args.force)
+        print(f"Installed bundled OpenCode agent: {destination}")
+    # Fail closed until callers inject a real, provenance-preserving extractor.
+    server = create_server((args.host, args.port))
+    print(f"ExpertApp listening at http://{args.host}:{server.server_address[1]}/")
+    print("OpenCode model setup: set OPENCODE_MODEL to a provider/model configured in your local OpenCode installation.")
+    print("Extraction service is unavailable until an embedding caller configures one; the review UI will refuse extraction.")
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        return 0
+    finally:
+        server.server_close()
+    return 0
+
+
 def _evaluate(args: argparse.Namespace) -> int:
     manifest = CaseManifest.load(Path(args.manifest))
     predictions = _load_predictions(args.predictions)
@@ -162,6 +190,21 @@ def _parser() -> argparse.ArgumentParser:
     review.add_argument("--replacement", help="JSON object or path for correct")
     review.add_argument("--output")
     review.set_defaults(handler=_review)
+
+    bootstrap = sub.add_parser("opencode-install", help="install the validated bundled OpenCode agent")
+    bootstrap.add_argument("--project-root", type=Path, default=Path("."))
+    bootstrap.add_argument("--force", action="store_true", help="replace an existing project agent")
+    bootstrap.set_defaults(handler=_install_agent)
+
+    expert = sub.add_parser("expert", help="run the local expert review app")
+    expert_sub = expert.add_subparsers(dest="expert_command", required=True)
+    serve = expert_sub.add_parser("serve", help="serve ExpertApp locally (auto-installs validated agent unless --no-install)")
+    serve.add_argument("--host", default="127.0.0.1")
+    serve.add_argument("--port", type=int, default=8000)
+    serve.add_argument("--project-root", type=Path, default=Path("."), help="project root for agent installation (default: cwd)")
+    serve.add_argument("--force", action="store_true", help="replace existing agent if present")
+    serve.add_argument("--no-install", action="store_true", help="skip bundled agent installation")
+    serve.set_defaults(handler=_serve_expert)
 
     evaluation = sub.add_parser("evaluate", help="evaluate predictions against a case manifest")
     evaluation.add_argument("manifest", type=Path)
