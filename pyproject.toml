@@ -11,6 +11,9 @@ requires-python = ">=3.11"
 license = { text = "GPL-3.0-or-later" }
 authors = [{ name = "top-papers" }]
 
+[project.scripts]
+scientific-extraction-harness = "scientific_extraction_harness.cli:main"
+
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 
