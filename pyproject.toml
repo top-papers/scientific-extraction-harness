@@ -14,6 +14,9 @@ authors = [{ name = "top-papers" }]
 [project.scripts]
 scientific-extraction-harness = "scientific_extraction_harness.cli:main"
 
+[tool.setuptools.package-data]
+scientific_extraction_harness = ["agents/*.md"]
+
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 

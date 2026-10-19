@@ -31,6 +31,24 @@ pip install -e '.[dev]'
 pytest
 ```
 
+## OpenCode expert workflow
+
+The project includes a reviewed, bundled OpenCode V2 agent definition and an `opencode.jsonc` project config. Install it without executing remote content:
+
+```bash
+scientific-extraction-harness opencode-install
+```
+
+The config intentionally does not guess a provider or model. Set `OPENCODE_MODEL` in your local environment to a provider/model identifier supported by your own OpenCode setup. Do not put credentials in project files.
+
+Start the local review UI; `expert serve` automatically installs the validated bundled agent into `.opencode/agents` under the chosen project root (the current directory by default):
+
+```bash
+scientific-extraction-harness expert serve
+```
+
+Use `--project-root PATH` to select the project, `--force` to replace an existing bundled agent, or `--no-install` to skip installation. No remote scripts are fetched or executed. OpenCode model setup is explicit: set `OPENCODE_MODEL` locally to a provider/model supported by your own OpenCode installation; credentials stay outside project files. The standalone UI has no extraction service configured and will refuse PDF extraction until an embedding caller injects a provenance-preserving local service. Verify page, modality, locator, and uncertainty before scoring. The server binds to `127.0.0.1` by default.
+
 ## Team workflow
 
 * Work in a feature branch and open a pull request; direct pushes to `main` are not the course workflow.
