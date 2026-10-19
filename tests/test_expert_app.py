@@ -4,7 +4,31 @@ import json
 
 import pytest
 
-from scientific_extraction_harness.expert_app import ExpertApp, ExpertAppError, safe_yaml
+from scientific_extraction_harness.expert_app import ExpertApp, ExpertAppError, _page, safe_yaml
+
+
+def test_page_has_safe_five_step_windows_tutorial_and_recovery_copy():
+    page = _page(ExpertApp())
+    assert "Follow the five steps" in page
+    assert "Install Python" in page
+    assert "Install OpenCode" in page
+    assert "Download and run the app" in page
+    assert "Choose a model and authenticate safely" in page
+    assert "Start, then review" in page
+    assert "type='button' data-step='1'" in page
+    assert "Never paste a token into this page" in page
+    assert "If extraction is unavailable" in page
+    assert "127.0.0.1:8000" in page
+
+
+def test_page_explains_review_submission_token_safety_after_intake():
+    app = ExpertApp(lambda _data, _name: {"candidates": []}, lambda package: package)
+    app.intake("paper.pdf", b"pdf")
+    page = _page(app)
+    assert "Export reviewed YAML" in page
+    assert "hf auth login" in page
+    assert "Only check this box" in page
+    assert "What did you verify?" in page
 
 
 def test_intake_keeps_provenance_and_separates_confidence_from_expert_score():

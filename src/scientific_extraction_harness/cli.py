@@ -16,6 +16,7 @@ from .pipeline import run_extract
 from .review import ReviewStore, ReviewEvent
 from .expert_app import create_server
 from .opencode_bootstrap import install_bundled_agent
+from .tutorial import check_environment, render_tutorial_text
 
 
 def _json_dump(value: object) -> str:
@@ -129,6 +130,11 @@ def _load_predictions(path: str) -> dict[str, list[EvidenceRecord]]:
     return result
 
 
+def _tutorial(args: argparse.Namespace) -> int:
+    print(render_tutorial_text(check_environment()))
+    return 0
+
+
 def _install_agent(args: argparse.Namespace) -> int:
     destination = install_bundled_agent(args.project_root, force=args.force)
     print(f"Installed bundled OpenCode agent: {destination}")
@@ -190,6 +196,9 @@ def _parser() -> argparse.ArgumentParser:
     review.add_argument("--replacement", help="JSON object or path for correct")
     review.add_argument("--output")
     review.set_defaults(handler=_review)
+
+    tutorial = sub.add_parser("tutorial", help="show bounded Windows setup checks and copy-paste commands")
+    tutorial.set_defaults(handler=_tutorial)
 
     bootstrap = sub.add_parser("opencode-install", help="install the validated bundled OpenCode agent")
     bootstrap.add_argument("--project-root", type=Path, default=Path("."))
