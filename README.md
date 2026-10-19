@@ -49,6 +49,18 @@ scientific-extraction-harness expert serve
 
 Use `--project-root PATH` to select the project, `--force` to replace an existing bundled agent, or `--no-install` to skip installation. No remote scripts are fetched or executed. OpenCode model setup is explicit: set `OPENCODE_MODEL` locally to a provider/model supported by your own OpenCode installation; credentials stay outside project files. The standalone UI has no extraction service configured and will refuse PDF extraction until an embedding caller injects a provenance-preserving local service. Verify page, modality, locator, and uncertainty before scoring. The server binds to `127.0.0.1` by default.
 
+## Interactive Windows tutorial
+
+After starting the local server, open the guided tutorial:
+
+```powershell
+scientific-extraction-harness tutorial
+# or, in the browser:
+# http://127.0.0.1:8000/tutorial
+```
+
+The browser page provides local environment checks, copy buttons for PowerShell commands, recovery steps, and explicit confirmation points for installation, authentication, and Hugging Face submission. It never displays token values or runs commands automatically.
+
 ## Team workflow
 
 * Work in a feature branch and open a pull request; direct pushes to `main` are not the course workflow.
