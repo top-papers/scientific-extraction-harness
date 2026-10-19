@@ -39,5 +39,5 @@ def test_project_config_uses_local_model_placeholder():
     assert '"agents"' in text
     assert '"model": "{env:OPENCODE_MODEL}"' in text
     assert '"$schema"' in text
-    assert '"permission"' in text
+    assert '"permissions"' in text
     assert "deepseek" not in text.lower()
