@@ -1,21 +1,21 @@
-# Contributor instructions
+# Инструкции для участников
 
-## Scope
+## Область работ
 
-Build a local-first, auditable harness for extracting experimental data from scientific literature. Make one focused change per pull request.
+Создавайте локальный и аудируемый контур для извлечения экспериментальных данных из научной литературы. На один pull request — одно целенаправленное изменение.
 
-## Required practices
+## Обязательные правила
 
-1. Never put credentials, personal contact data, survey exports, or unredacted agent transcripts in Git.
-2. Use only documents that the contributor is authorized to process.
-3. Preserve provenance: each extracted datum needs document ID, page number, source modality, and an evidence locator.
-4. Mark uncertainty instead of inventing a value. A reviewer can reject or correct any candidate.
-5. Add/update a test for code changes. Run `pytest` before opening a PR.
+1. Никогда не добавляйте в Git учётные данные, персональные контактные данные, выгрузки опросов или необезличенные расшифровки работы агента.
+2. Используйте только документы, на обработку которых у участника есть разрешение.
+3. Сохраняйте provenance: для каждого извлечённого значения нужны идентификатор документа, номер страницы, modality источника и locator свидетельства.
+4. При неоднозначности отмечайте неопределённость, а не придумывайте значение. Проверяющий может отклонить или исправить любой кандидат.
+5. Добавляйте или обновляйте тест для изменений кода. Перед открытием PR запускайте `pytest`.
 
-## Pull request template
+## Шаблон pull request
 
-Include: goal, input fixture or reproduction steps, expected output, verification command/result, limitations, and whether any data was de-identified.
+Укажите: цель, входной fixture или шаги воспроизведения, ожидаемый результат, команду/результат проверки, ограничения и сведения о том, были ли данные обезличены.
 
-## Dataset contributions
+## Вклад в наборы данных
 
-An expert uses their own Hugging Face token locally. Tokens must be supplied through the Hugging Face CLI or environment at runtime, never committed or pasted into an issue/PR. Submit only de-identified and reviewed artifacts to the target dataset in a separate PR.
+Эксперт использует собственный токен Hugging Face локально. Токены должны передаваться через Hugging Face CLI или окружение во время запуска; их нельзя коммитить или вставлять в issue/PR. Отправляйте в целевой набор данных только обезличенные проверенные артефакты отдельным PR.

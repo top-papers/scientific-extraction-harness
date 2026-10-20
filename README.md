@@ -1,28 +1,28 @@
 # Scientific Extraction Harness
 
-GPL-3.0 licensed starter repository for a reproducible agent harness that extracts structured experimental evidence from scientific papers and books, including text, tables, plots, and scanned pages.
+Репозиторий-заготовка под лицензией GPL-3.0 для воспроизводимого агентного контура, извлекающего структурированные экспериментальные данные из научных статей и книг, включая текст, таблицы, графики и отсканированные страницы.
 
-## Project goal
+## Цель проекта
 
-Given a permitted local source document, produce a reviewable evidence package:
+Получив разрешённый локальный исходный документ, создать проверяемый пакет свидетельств:
 
-1. extracted claims, variables, values, units, and experimental conditions;
-2. links to the source page/region supporting every value;
-3. confidence and validation status for each item;
-4. an auditable run record that permits expert correction.
+1. извлечённые утверждения, переменные, значения, единицы и экспериментальные условия;
+2. ссылки на страницу/область источника, подтверждающую каждое значение;
+3. состояние уверенности и валидации для каждого элемента;
+4. аудируемую запись запуска, позволяющую эксперту внести исправления.
 
-The harness must not claim a value when the source evidence is absent or ambiguous. Human review remains mandatory for dataset submission.
+Контур не должен заявлять значение, если свидетельство в источнике отсутствует или неоднозначно. Проверка человеком остаётся обязательной для отправки данных в набор.
 
-## Architecture
+## Архитектура
 
 ```text
 document -> ingest -> text/table/figure extraction -> candidate evidence
-         -> normalization + provenance -> expert review -> approved record
+          -> normalization + provenance -> expert review -> approved record
 ```
 
-The initial data contract is documented in [`docs/data-contract.md`](docs/data-contract.md). The Python package currently provides the smallest useful foundation: normalized evidence records and JSONL read/write validation.
+Первоначальный контракт данных описан в [`docs/data-contract.md`](docs/data-contract.md). Сейчас Python-пакет предоставляет минимально полезную основу: нормализованные записи свидетельств и проверку чтения/записи JSONL.
 
-## Getting started
+## Быстрый старт
 
 ```bash
 python -m venv .venv
@@ -31,48 +31,48 @@ pip install -e '.[dev]'
 pytest
 ```
 
-## OpenCode expert workflow
+## Рабочий процесс эксперта OpenCode
 
-The project includes a reviewed, bundled OpenCode V2 agent definition and an `opencode.jsonc` project config. Install it without executing remote content:
+Проект содержит проверенное встроенное определение агента OpenCode V2 и конфигурацию проекта `opencode.jsonc`. Установить его без выполнения удалённого содержимого можно так:
 
 ```bash
 scientific-extraction-harness opencode-install
 ```
 
-The config intentionally does not guess a provider or model. Set `OPENCODE_MODEL` in your local environment to a provider/model identifier supported by your own OpenCode setup. Do not put credentials in project files.
+Конфигурация намеренно не угадывает провайдера или модель. Установите `OPENCODE_MODEL` в локальном окружении, указав идентификатор provider/model, поддерживаемый вашей конфигурацией OpenCode. Не помещайте учётные данные в файлы проекта.
 
-Start the local review UI; `expert serve` automatically installs the validated bundled agent into `.opencode/agents` under the chosen project root (the current directory by default):
+Запустите локальный интерфейс проверки; `expert serve` автоматически устанавливает проверенного встроенного агента в `.opencode/agents` в выбранном корне проекта (по умолчанию — в текущем каталоге):
 
 ```bash
 scientific-extraction-harness expert serve
 ```
 
-Use `--project-root PATH` to select the project, `--force` to replace an existing bundled agent, or `--no-install` to skip installation. No remote scripts are fetched or executed. OpenCode model setup is explicit: set `OPENCODE_MODEL` locally to a provider/model supported by your own OpenCode installation; credentials stay outside project files. The standalone UI has no extraction service configured and will refuse PDF extraction until an embedding caller injects a provenance-preserving local service. Verify page, modality, locator, and uncertainty before scoring. The server binds to `127.0.0.1` by default.
+Используйте `--project-root PATH`, чтобы выбрать проект, `--force`, чтобы заменить существующего встроенного агента, или `--no-install`, чтобы пропустить установку. Удалённые скрипты не загружаются и не выполняются. Настройка модели OpenCode явная: локально задайте `OPENCODE_MODEL` для provider/model, поддерживаемого вашей установкой OpenCode; учётные данные остаются вне файлов проекта. Автономный интерфейс не настроен на сервис извлечения и откажется извлекать PDF, пока вызывающая сторона не передаст локальный сервис, сохраняющий provenance. Перед оценкой проверьте страницу, modality, locator и неопределённость. По умолчанию сервер привязан к `127.0.0.1`.
 
-## Interactive Windows tutorial
+## Интерактивный учебник для Windows
 
-After starting the local server, open the guided tutorial:
+После запуска локального сервера откройте пошаговый учебник:
 
 ```powershell
 scientific-extraction-harness tutorial
-# or, in the browser:
+# или в браузере:
 # http://127.0.0.1:8000/tutorial
 ```
 
-The browser page provides local environment checks, copy buttons for PowerShell commands, recovery steps, and explicit confirmation points for installation, authentication, and Hugging Face submission. It never displays token values or runs commands automatically.
+Страница проверяет локальное окружение, содержит кнопки копирования команд PowerShell, шаги восстановления и явные точки подтверждения для установки, аутентификации и отправки в Hugging Face. Она никогда не показывает значения токенов и не запускает команды автоматически.
 
-## Team workflow
+## Командный процесс
 
-* Work in a feature branch and open a pull request; direct pushes to `main` are not the course workflow.
-* Do not commit source PDFs/books unless their licence and redistribution rights are verified.
-* Do not commit access tokens, contact data, raw survey exports, or expert-session logs containing secrets.
-* Every PR needs a small test or a reproducible manual verification note.
-* Expert corrections are captured as structured review records; only approved, de-identified sessions may be proposed to the external dataset.
+* Работайте в feature-ветке и открывайте pull request; прямые push в `main` не являются рабочим процессом курса.
+* Не добавляйте исходные PDF/книги, пока не проверены лицензия и права на распространение.
+* Не добавляйте в Git токены доступа, контактные данные, необработанные выгрузки опросов или журналы экспертных сессий, содержащие секреты.
+* Каждый PR должен содержать небольшой тест или воспроизводимую заметку о ручной проверке.
+* Исправления экспертов записываются как структурированные review records; для внешнего набора можно предлагать только одобренные обезличенные сессии.
 
-## Work packages
+## Рабочие пакеты
 
-The initial assignments and acceptance criteria are in [`docs/work-packages.md`](docs/work-packages.md).
+Начальные задания и критерии приёмки находятся в [`docs/work-packages.md`](docs/work-packages.md).
 
-## License
+## Лицензия
 
-GNU General Public License v3.0 or later. See [`LICENSE`](LICENSE).
+GNU General Public License v3.0 или более поздняя версия. См. [`LICENSE`](LICENSE).

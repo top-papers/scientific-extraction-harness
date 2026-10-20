@@ -1,18 +1,18 @@
-# Evidence data contract (v0)
+# Контракт данных свидетельств (v0)
 
-Each JSONL line is one `EvidenceRecord`.
+Каждая строка JSONL — это один `EvidenceRecord`.
 
-| Field | Meaning | Rule |
+| Поле | Значение | Правило |
 | --- | --- | --- |
-| `document_id` | Stable local/pseudonymous document identifier | Required; never use a secret URL. |
-| `page` | One-based source page | Required. |
-| `modality` | `text`, `table`, `figure`, or `scan` | Required. |
-| `locator` | Reviewer-readable region reference | Required, e.g. `table:2/row:4/column:yield`. |
-| `field` | Normalized measured/claimed variable | Required. |
-| `value` | Extracted value exactly as reviewed | Required. |
-| `unit` | Unit or `null` | Preserve source unit initially. |
-| `confidence` | Extractor confidence | Number in `[0, 1]`; not a substitute for review. |
-| `status` | Review state | `candidate`, `approved`, or `rejected`. |
-| `reviewer_note` | Correction or ambiguity explanation | Optional; must contain no personal data or credentials. |
+| `document_id` | Стабильный локальный/псевдонимный идентификатор документа | Обязательно; никогда не используйте секретный URL. |
+| `page` | Исходная страница с нумерацией от единицы | Обязательно. |
+| `modality` | `text`, `table`, `figure` или `scan` | Обязательно. |
+| `locator` | Понятная проверяющему ссылка на область | Обязательно, например `table:2/row:4/column:yield`. |
+| `field` | Нормализованная измеренная/заявленная переменная | Обязательно. |
+| `value` | Извлечённое и проверенное значение без изменений | Обязательно. |
+| `unit` | Единица измерения или `null` | Изначально сохраняйте единицу из источника. |
+| `confidence` | Уверенность экстрактора | Число в `[0, 1]`; не заменяет проверку. |
+| `status` | Состояние проверки | `candidate`, `approved` или `rejected`. |
+| `reviewer_note` | Пояснение исправления или неоднозначности | Необязательно; не должно содержать персональных данных или учётных данных. |
 
-The extraction layer may generate candidates. Only the review layer may set `status: approved`.
+Слой извлечения может создавать кандидатов. Только слой проверки может установить `status: approved`.

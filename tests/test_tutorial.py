@@ -4,16 +4,16 @@ from scientific_extraction_harness.tutorial import EnvironmentStatus, check_envi
 def test_environment_hides_token():
     status = check_environment({'HF_TOKEN': 'secret', 'OPENCODE_MODEL': 'provider/model'})
     text = render_tutorial_text(status)
-    assert status.hf_token_configured and 'secret' not in text and 'value hidden' in text
+    assert status.hf_token_configured and 'secret' not in text and 'значение скрыто' in text
 
 def test_tutorial_commands_and_safety():
     text = render_tutorial_text(EnvironmentStatus('3.12.0', True, 'opencode.exe', True, False, False))
     assert 'py -m pip install -e .' in text and 'hf auth login' in text
-    assert 'Nothing runs automatically' in text
+    assert 'Ничего не запускается автоматически' in text
 
 def test_html_tutorial():
     html = render_tutorial_html(EnvironmentStatus('3.11.0', True, 'missing', False, True, True))
-    assert 'Windows expert tutorial' in html and 'configured (value hidden)' in html and 'hf auth login' in html
+    assert 'Руководство эксперта для Windows' in html and 'настроен (значение скрыто)' in html and 'hf auth login' in html
 
 def test_cli_tutorial(capsys):
     assert main(['tutorial']) == 0

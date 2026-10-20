@@ -1,45 +1,45 @@
-# Initial work packages
+# Начальные рабочие пакеты
 
-All groups work via pull requests against this repository. Keep source documents out of Git unless redistribution is explicitly permitted.
+Все группы работают через pull request в этом репозитории. Не добавляйте исходные документы в Git, если распространение явно не разрешено.
 
-## Developer group B — data engineering and digitization
+## Группа разработчиков B — инженерия данных и оцифровка
 
-**Members:** P03, P04, P06, P07, P12, P18. **Suggested coordinator:** P07; availability backup: P06.
+**Участники:** P03, P04, P06, P07, P12, P18. **Рекомендуемый координатор:** P07; резервный координатор: P06.
 
-| PR-sized task | Deliverable | Acceptance check |
+| Задача размера PR | Результат | Проверка приёмки |
 | --- | --- | --- |
-| B1 Ingestion manifest | Schema and loader for permitted local documents | Invalid manifest has a clear error. |
-| B2 Text/OCR adapter | Interface plus one deterministic fixture-based adapter | Output retains page and character/region locator. |
-| B3 Table adapter | Candidate rows from a text table fixture | Values, headers, and units map to `EvidenceRecord`. |
-| B4 Figure/plot adapter | Region/axis/series provenance design and stub | Candidate coordinate has a figure locator and confidence. |
-| B5 Run ledger | JSONL run metadata without prompts/secrets | One command produces a reviewable ledger. |
+| B1 Manifest ingestion | Схема и загрузчик для разрешённых локальных документов | Недействительный manifest даёт понятную ошибку. |
+| B2 Text/OCR adapter | Интерфейс и один детерминированный adapter на основе fixture | Output сохраняет страницу и символьный/региональный locator. |
+| B3 Table adapter | Кандидатные строки из fixture текстовой таблицы | Значения, заголовки и единицы отображаются в `EvidenceRecord`. |
+| B4 Figure/plot adapter | Дизайн provenance области/осей/серии и заглушка | Кандидатная координата имеет figure locator и confidence. |
+| B5 Run ledger | JSONL-метаданные запуска без prompts/secrets | Одна команда создаёт проверяемый ledger. |
 
-## Developer group C — ML, orchestration, and evaluation
+## Группа разработчиков C — ML, оркестрация и оценивание
 
-**Members:** P02, P09, P10, P11, P15, P17. **Suggested coordinators:** P11/P17; availability anchor: P02.
+**Участники:** P02, P09, P10, P11, P15, P17. **Рекомендуемые координаторы:** P11/P17; основной резерв: P02.
 
-| PR-sized task | Deliverable | Acceptance check |
+| Задача размера PR | Результат | Проверка приёмки |
 | --- | --- | --- |
-| C1 Agent harness loop | Small extract → validate → review-request pipeline | Stops on missing evidence; never silently approves. |
-| C2 Normalization | Variable/unit normalization with reversible source values | Tests cover common unit variants. |
-| C3 Confidence policy | Explainable confidence composition | Test shows a weak locator reduces confidence. |
-| C4 Evaluation fixtures | De-identified gold JSONL examples | Precision/recall report runs locally. |
-| C5 Review UI/CLI | Minimal candidate approval/rejection action | Approval adds reviewer note and preserves provenance. |
+| C1 Agent harness loop | Небольшой pipeline extract → validate → review-request | При отсутствии свидетельства останавливается; ничего не одобряет молча. |
+| C2 Normalization | Нормализация переменных/единиц с обратимыми исходными значениями | Тесты покрывают распространённые варианты единиц. |
+| C3 Confidence policy | Объяснимое составление confidence | Тест показывает, что слабый locator уменьшает confidence. |
+| C4 Evaluation fixtures | Обезличенные эталонные примеры JSONL | Отчёт precision/recall запускается локально. |
+| C5 Review UI/CLI | Минимальное действие одобрения/отклонения кандидата | Одобрение добавляет заметку проверяющего и сохраняет provenance. |
 
-## Expert group A — source validation and calibration
+## Экспертная группа A — проверка источников и калибровка
 
-**Members:** P01, P05, P08, P13, P14, P16. **Suggested coordinator:** P13. **Support:** nominate one developer rotating from B/C because no member reported 4–7 hours weekly.
+**Участники:** P01, P05, P08, P13, P14, P16. **Рекомендуемый координатор:** P13. **Поддержка:** назначить одного разработчика из B/C по очереди, поскольку ни один участник не сообщил о доступности 4–7 часов в неделю.
 
-| Task | Deliverable | Done when |
+| Задача | Результат | Готово, когда |
 | --- | --- | --- |
-| A1 Source rubric | Definition of evidence, ambiguity, and rejection cases | Developers can implement it as validation tests. |
-| A2 Calibration set | Small authorized/de-identified set of reviewed examples | Each value has page/region provenance. |
-| A3 Harness review | Run the harness, correct candidates, file actionable issues/PRs | Each correction names the failing stage and expected behavior. |
-| A4 Dataset preparation | De-identification checklist and dataset card amendment proposal | No names, contacts, tokens, copyrighted source files, or raw sensitive transcripts. |
+| A1 Source rubric | Определение свидетельства, неоднозначности и случаев отклонения | Разработчики могут реализовать его в виде тестов валидации. |
+| A2 Calibration set | Небольшой разрешённый/обезличенный набор проверенных примеров | Для каждого значения есть provenance страницы/области. |
+| A3 Harness review | Запуск контура, исправление кандидатов, регистрация actionable issues/PRs | Каждое исправление называет сбойный этап и ожидаемое поведение. |
+| A4 Dataset preparation | Чеклист обезличивания и предложение поправки к dataset card | Нет имён, контактов, токенов, защищённых авторским правом исходных файлов или необработанных чувствительных расшифровок. |
 
-## Delivery rhythm
+## Ритм поставки
 
-1. B and C deliver interfaces and fixtures first.
-2. A reviews candidates and files corrections against explicit fixtures.
-3. B/C turn accepted corrections into tests and PRs.
-4. A submits only approved, de-identified calibration artifacts to the external dataset from personal accounts.
+1. B и C сначала поставляют интерфейсы и fixtures.
+2. A проверяет кандидатов и регистрирует исправления на основе явных fixtures.
+3. B/C превращают принятые исправления в тесты и PR.
+4. A отправляет во внешний набор данных только одобренные обезличенные калибровочные артефакты из личных аккаунтов.
