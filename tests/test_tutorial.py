@@ -1,6 +1,17 @@
 from scientific_extraction_harness.cli import main
 from scientific_extraction_harness.tutorial import EnvironmentStatus, check_environment, render_tutorial_html, render_tutorial_text
 
+
+def test_opencode_prompt_is_explicitly_labeled_copyable_and_safe():
+    html = render_tutorial_html(EnvironmentStatus('3.11.0', True, 'opencode.exe', True, False, False))
+    assert 'Промпт для OpenCode' in html
+    assert 'Скопировать промпт' in html
+    assert 'navigator.clipboard.writeText' in html
+    assert 'осмотрите проект' in html
+    assert 'подтверждение' in html
+    assert 'секреты' in html
+    assert 'точный статус' in html
+
 def test_environment_hides_token():
     status = check_environment({'HF_TOKEN': 'secret', 'OPENCODE_MODEL': 'provider/model'})
     text = render_tutorial_text(status)

@@ -19,6 +19,9 @@ def test_page_has_safe_five_step_windows_tutorial_and_recovery_copy():
     assert "Не вставляйте токен на эту страницу" in page
     assert "Если извлечение недоступно" in page
     assert "127.0.0.1:8000" in page
+    assert "Промпт для OpenCode" in page
+    assert "Скопировать промпт" in page
+    assert "подтверждение перед сетью" in page
 
 
 def test_page_explains_review_submission_token_safety_after_intake():
