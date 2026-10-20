@@ -33,6 +33,20 @@ def test_expert_serve_accepts_install_flags(tmp_path):
     assert args.no_install is True
 
 
+def test_readme_and_copyable_prompt_name_project_and_human_gates():
+    root = Path(__file__).parents[1]
+    readme = (root / "README.md").read_text(encoding="utf-8")
+    prompt = __import__("scientific_extraction_harness.tutorial", fromlist=["OPENCODE_PROMPT"]).OPENCODE_PROMPT
+    for text in (readme, prompt):
+        assert "https://github.com/top-papers/scientific-extraction-harness" in text
+        assert "hf auth login" in text
+        assert "оценку 0–10" in text
+        assert "не пытайся его обойти" in text
+    assert "не проси токен" in prompt
+    assert "глобальную конфигурацию" in prompt
+    assert "PR/публикацию" in prompt
+
+
 def test_project_config_uses_local_model_placeholder():
     config = Path(__file__).parents[1] / "opencode.jsonc"
     text = config.read_text(encoding="utf-8")
