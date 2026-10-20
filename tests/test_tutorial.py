@@ -7,10 +7,14 @@ def test_opencode_prompt_is_explicitly_labeled_copyable_and_safe():
     assert 'Промпт для OpenCode' in html
     assert 'Скопировать промпт' in html
     assert 'navigator.clipboard.writeText' in html
-    assert 'осмотрите проект' in html
+    assert 'осмотри текущий проект' in html
     assert 'подтверждение' in html
     assert 'секреты' in html
     assert 'точный статус' in html
+    assert 'https://github.com/top-papers/scientific-extraction-harness' in html
+    assert 'hf auth login' in html
+    assert 'оценку 0–10' in html
+    assert 'не пытайся его обойти' in html
 
 def test_environment_hides_token():
     status = check_environment({'HF_TOKEN': 'secret', 'OPENCODE_MODEL': 'provider/model'})
