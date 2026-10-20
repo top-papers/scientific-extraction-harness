@@ -1,4 +1,4 @@
-# Safe local defaults for Phase 4 orchestration.
+# Безопасные локальные значения по умолчанию для оркестрации Phase 4.
 external_calls = false
 seed = 0
 

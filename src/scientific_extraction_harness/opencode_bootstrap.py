@@ -13,7 +13,7 @@ import tempfile
 
 
 _AGENT_NAME = "scientific-extraction-expert.md"
-_AGENT_SHA256 = "a2de033b525c111ac40d073b9d2a282d6cc9189eabd67300a76ecb8e1615fd75"
+_AGENT_SHA256 = "0a229d51e04f9a905b8e9139de8634ebef50deb7b13abcc44b3cd7a676fe627c"
 _FRONTMATTER = re.compile(r"\A---\s*\n(?P<body>.*?)\n---\s*\n", re.DOTALL)
 
 

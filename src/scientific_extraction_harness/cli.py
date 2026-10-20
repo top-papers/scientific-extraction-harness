@@ -1,4 +1,4 @@
-"""Local command line interface for extraction, review, and evaluation."""
+"""Локальный интерфейс командной строки для извлечения, проверки и оценки."""
 from __future__ import annotations
 
 import argparse
@@ -174,48 +174,48 @@ def _evaluate(args: argparse.Namespace) -> int:
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="scientific-extraction-harness")
     sub = parser.add_subparsers(dest="command", required=True)
-    extract = sub.add_parser("extract", help="extract candidates from a local document")
+    extract = sub.add_parser("extract", help="извлечь кандидатов из локального документа")
     extract.add_argument("manifest", type=Path)
     extract.add_argument("input_root", type=Path)
     extract.add_argument("--adapter", choices=("text", "table"), required=True)
-    extract.add_argument("--rules", help="JSON list or path to text adapter rules")
-    extract.add_argument("--config", help="optional JSON pipeline configuration")
+    extract.add_argument("--rules", help="список JSON или путь к правилам text adapter")
+    extract.add_argument("--config", help="необязательная конфигурация pipeline в JSON")
     extract.add_argument("--run-id")
     extract.add_argument("--seed", type=int, default=0)
     extract.add_argument("--output")
     extract.add_argument("--candidates")
     extract.set_defaults(handler=_extract)
 
-    review = sub.add_parser("review", help="append one explicit human review event")
+    review = sub.add_parser("review", help="добавить одно явно заданное событие проверки человеком")
     review.add_argument("review_jsonl", type=Path)
     review.add_argument("--run-id", required=True)
     review.add_argument("--candidate-id", required=True)
     review.add_argument("--action", choices=("approve", "reject", "correct"), required=True)
     review.add_argument("--reviewer-id", required=True)
     review.add_argument("--note")
-    review.add_argument("--replacement", help="JSON object or path for correct")
+    review.add_argument("--replacement", help="объект JSON или путь для correct")
     review.add_argument("--output")
     review.set_defaults(handler=_review)
 
-    tutorial = sub.add_parser("tutorial", help="show bounded Windows setup checks and copy-paste commands")
+    tutorial = sub.add_parser("tutorial", help="показать ограниченные проверки настройки Windows и команды для копирования")
     tutorial.set_defaults(handler=_tutorial)
 
-    bootstrap = sub.add_parser("opencode-install", help="install the validated bundled OpenCode agent")
+    bootstrap = sub.add_parser("opencode-install", help="установить проверенного встроенного агента OpenCode")
     bootstrap.add_argument("--project-root", type=Path, default=Path("."))
-    bootstrap.add_argument("--force", action="store_true", help="replace an existing project agent")
+    bootstrap.add_argument("--force", action="store_true", help="заменить существующего агента проекта")
     bootstrap.set_defaults(handler=_install_agent)
 
-    expert = sub.add_parser("expert", help="run the local expert review app")
+    expert = sub.add_parser("expert", help="запустить локальное приложение экспертной проверки")
     expert_sub = expert.add_subparsers(dest="expert_command", required=True)
-    serve = expert_sub.add_parser("serve", help="serve ExpertApp locally (auto-installs validated agent unless --no-install)")
+    serve = expert_sub.add_parser("serve", help="запустить локальный ExpertApp (автоматически устанавливает проверенного агента, если не указан --no-install)")
     serve.add_argument("--host", default="127.0.0.1")
     serve.add_argument("--port", type=int, default=8000)
-    serve.add_argument("--project-root", type=Path, default=Path("."), help="project root for agent installation (default: cwd)")
-    serve.add_argument("--force", action="store_true", help="replace existing agent if present")
-    serve.add_argument("--no-install", action="store_true", help="skip bundled agent installation")
+    serve.add_argument("--project-root", type=Path, default=Path("."), help="корень проекта для установки агента (по умолчанию: cwd)")
+    serve.add_argument("--force", action="store_true", help="заменить существующего агента")
+    serve.add_argument("--no-install", action="store_true", help="пропустить установку встроенного агента")
     serve.set_defaults(handler=_serve_expert)
 
-    evaluation = sub.add_parser("evaluate", help="evaluate predictions against a case manifest")
+    evaluation = sub.add_parser("evaluate", help="оценить predictions по case manifest")
     evaluation.add_argument("manifest", type=Path)
     evaluation.add_argument("predictions", type=Path)
     evaluation.add_argument("--output")

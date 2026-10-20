@@ -20,9 +20,9 @@ def test_tutorial_route_and_main_link():
             finally:
                 server.shutdown()
                 thread.join()
-        assert "Windows expert tutorial" in tutorial
+        assert "Руководство эксперта для Windows" in tutorial
         assert "hf auth login" in tutorial
-        assert "value hidden" in tutorial
+        assert "значение скрыто" in tutorial
         assert "href='/tutorial'" in main_page
     finally:
         server.server_close()
