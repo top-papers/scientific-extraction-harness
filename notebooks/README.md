@@ -5,7 +5,7 @@ Google Colab-ноутбуки для эксперта. Ноутбук замен
 
 ## scientific_experiment_review.ipynb
 
-[![Открыть в Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/top-papers/scientific-extraction-harness/blob/feat/expert-validation-notebook/notebooks/scientific_experiment_review.ipynb)
+[![Открыть в Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/top-papers/scientific-extraction-harness/blob/main/notebooks/scientific_experiment_review.ipynb)
 
 1. Установка `pypdf`/`requests`.
 2. Загрузка PDF/TXT/HTML/DOCX/RTF (кнопка Colab, локальный путь или ссылка; для приватного GitHub-источника
