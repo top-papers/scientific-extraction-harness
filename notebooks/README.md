@@ -4,6 +4,23 @@ Google Colab-ноутбуки для эксперта. Ноутбук замен
 статью, модель извлекает кандидатные `EvidenceRecord`, эксперт проверяет их в HTML-форме и отправляет только
 одобренные записи в набор данных.
 
+## Доменный контур (аэродинамика / радиолокация / САУ / прочность)
+
+Ноутбук поддерживает доменный режим для инженерных статей (результаты исследования
+применимости, см. [`docs/domain-extraction-survey.md`](../docs/domain-extraction-survey.md)):
+
+- `DOMAIN` в ячейке 4: `"aerodynamics" | "radar" | "control" | "strength"` (пусто — универсальный режим);
+- доменные словари переменных/chart-типов/условий эксперимента добавляются в системные промпты
+  (текстовый и vision) — так модель знает, что искать (Cl/Cd/Re, Pd/SNR/RCS, перерегулирование/Kp,
+  σ_y/S-N/ползучесть) и какие условия обязательны (Re/M, поляризация, simulation_vs_experiment, stress_ratio);
+- **физические sanity-чеки** кандидатов (`DOMAIN_CHECKS = True`): например Cd>0, Pd∈[0,1],
+  σ_y>0, перерегулирование 0–200% — нарушение понижает confidence до ≤0.3 и пишет заметку
+  проверяющему, но не удаляет запись и не заменяет решение эксперта;
+- правила чтения графиков в vision-промпте: log-оси (log-log S-N, Bode), полярные сетки (ДН, RCS),
+  «одна запись = одна серия», цензурированные run-out точки на S-N кривых не оцифровываются как отказы;
+- самопроверка модели перед выдачей значения (паттерн ChatExtract follow-up): конкурирующие числа
+  попадают в `reviewer_note`.
+
 ## scientific_experiment_review.ipynb
 
 [![Открыть в Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/top-papers/scientific-extraction-harness/blob/main/notebooks/scientific_experiment_review.ipynb)
