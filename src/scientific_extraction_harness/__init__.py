@@ -33,6 +33,19 @@ from .normalize import (
     normalize_value,
 )
 from .pipeline import PipelineBudget, PipelineResult, run_extract
+from .domain_knowledge import (
+    DOMAIN_SCHEMA_VERSION,
+    DOMAINS,
+    DomainProfile,
+    AERODYNAMICS,
+    RADAR,
+    CONTROL,
+    STRENGTH,
+    domain_prompt,
+    get_domain_profile,
+    list_domains,
+    run_domain_checks,
+)
 from .review import ReviewAction, ReviewError, ReviewEvent, ReviewResult, ReviewStore, apply_review_event
 from .improvement import (
     MANIFEST_VERSION,
@@ -132,6 +145,17 @@ __all__ = [
     "PipelineBudget",
     "PipelineResult",
     "run_extract",
+    "DOMAIN_SCHEMA_VERSION",
+    "DOMAINS",
+    "DomainProfile",
+    "AERODYNAMICS",
+    "RADAR",
+    "CONTROL",
+    "STRENGTH",
+    "domain_prompt",
+    "get_domain_profile",
+    "list_domains",
+    "run_domain_checks",
     "MANIFEST_VERSION",
     "MUTATION_KINDS",
     "CandidateManifest",
