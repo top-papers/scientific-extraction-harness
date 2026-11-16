@@ -10,7 +10,7 @@ from typing import Any, Callable, Mapping
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-DEFAULT_REPO_ID = "chaotic-good-project/scientific-extraction-review"
+DEFAULT_REPO_ID = "chaotic-good-project/physics-experiment-records"
 _API = "https://huggingface.co/api"
 _REPO = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,95}/[A-Za-z0-9][A-Za-z0-9._-]{0,95}$")
 _NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}\.ya?ml$")

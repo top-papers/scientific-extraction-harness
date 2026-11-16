@@ -1,8 +1,13 @@
 from __future__ import annotations
 
 import json
+import re
+from pathlib import Path
+
 import pytest
-from scientific_extraction_harness.hf_dataset import HuggingFacePublishError, HuggingFacePublisher
+from scientific_extraction_harness.hf_dataset import DEFAULT_REPO_ID, HuggingFacePublishError, HuggingFacePublisher
+
+NOTEBOOK = Path(__file__).resolve().parents[1] / "notebooks" / "scientific_experiment_review.ipynb"
 
 
 class Response:
@@ -75,3 +80,19 @@ def test_invalid_repo_filename_and_pdf_fail_closed():
         publisher.publish("x", document_id="../escape")
     with pytest.raises(HuggingFacePublishError, match="PDF"):
         publisher.publish("%PDF-raw bytes", document_id="paper")
+
+
+def _notebook_repo_id() -> str:
+    cells = json.loads(NOTEBOOK.read_text(encoding="utf-8"))["cells"]
+    source = "\n".join("".join(cell["source"]) for cell in cells)
+    match = re.search(r'^HF_REPO_ID = "([^"]+)"', source, re.MULTILINE)
+    assert match, "the notebook must define HF_REPO_ID"
+    return match.group(1)
+
+
+def test_default_repo_id_points_to_the_published_dataset():
+    assert DEFAULT_REPO_ID == "chaotic-good-project/physics-experiment-records"
+
+
+def test_notebook_form_links_the_same_dataset_as_the_package_default():
+    assert _notebook_repo_id() == DEFAULT_REPO_ID
